@@ -15,13 +15,14 @@ import android.renderscript.ScriptIntrinsicBlur;
 public class Blur {
 
 	public static Bitmap apply(Context context, Bitmap sentBitmap) {
-		return apply(context, sentBitmap, 10);
+		return apply(context, sentBitmap, 20);
 	}
 
 	@SuppressLint("NewApi")
 	public static Bitmap apply(Context context, Bitmap sentBitmap, int radius) {
 
-        Bitmap bitmap = Bitmap.createScaledBitmap(sentBitmap, sentBitmap.getWidth()/2, sentBitmap.getHeight()/2, false);
+        Bitmap bitmap = Bitmap.createScaledBitmap(sentBitmap, sentBitmap.getWidth()/4,
+                sentBitmap.getHeight()/4, false);
 
 		if (VERSION.SDK_INT > 16) {
 			final RenderScript rs = RenderScript.create(context);
