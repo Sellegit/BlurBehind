@@ -12,7 +12,7 @@ import com.faradaj.blurbehind.util.Blur;
 public class BlurBehind {
 
     private static final String KEY_CACHE_BLURRED_BACKGROUND_IMAGE = "KEY_CACHE_BLURRED_BACKGROUND_IMAGE";
-    private static final int CONSTANT_BLUR_RADIUS = 12;
+    private static final int CONSTANT_DEFAULT_BLUR_RADIUS = 12;
     private static final int CONSTANT_DEFAULT_ALPHA = 100;
 
     private static final LruCache<String, Bitmap> mImageCache = new LruCache<String, Bitmap>(1);
@@ -20,6 +20,7 @@ public class BlurBehind {
 
     private int mAlpha = CONSTANT_DEFAULT_ALPHA;
     private int mFilterColor = -1;
+    private int mBlurRadius = CONSTANT_DEFAULT_BLUR_RADIUS;
 
     private enum State {
         READY,
@@ -52,6 +53,11 @@ public class BlurBehind {
 
     public BlurBehind withFilterColor(int filterColor) {
         this.mFilterColor = filterColor;
+        return this;
+    }
+
+    public BlurBehind withBlurRadius(int blurRadius) {
+        this.mBlurRadius = blurRadius;
         return this;
     }
 
@@ -94,7 +100,7 @@ public class BlurBehind {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Bitmap blurredBitmap = Blur.apply(activity, image, CONSTANT_BLUR_RADIUS);
+            Bitmap blurredBitmap = Blur.apply(activity, image, mBlurRadius);
             mImageCache.put(KEY_CACHE_BLURRED_BACKGROUND_IMAGE, blurredBitmap);
 
             return null;
